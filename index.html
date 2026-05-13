@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gastrofest Batumi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #F6F1E8;
+      --ink:     #1B1410;
+      --accent:  #C94B1F;
+      --muted:   #8A7B6F;
+      --rule:    #DDD4C3;
+      --white:   #FEFCF8;
+      --f-disp:  'Cormorant Garamond', Georgia, serif;
+      --f-body:  'Jost', sans-serif;
+      --max:     1160px;
+      --gutter:  clamp(1.5rem, 5vw, 3rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--f-body);
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--f-disp);
+      font-weight: 500;
+      line-height: 1.1;
+    }
+
+    p { max-width: 64ch; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-block;
+      font-family: var(--f-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.1rem;
+      border: 1.5px solid var(--ink);
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn:hover { background: var(--ink); color: var(--bg); }
+
+    .btn-filled {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--white);
+    }
+    .btn-filled:hover { background: var(--ink); border-color: var(--ink); }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: var(--f-disp);
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links .nav-apply a { color: var(--accent); }
+
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-burger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--ink);
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      border-top: 1px solid var(--rule);
+      background: var(--bg);
+    }
+    .nav-mobile a {
+      display: block;
+      padding: 1rem var(--gutter);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--rule);
+      transition: color 0.2s;
+    }
+    .nav-mobile a:hover { color: var(--ink); }
+    .nav-mobile a.nav-apply-m { color: var(--accent); }
+
+    /* ── Hero ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero {
+      min-height: calc(100svh - 64px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: clamp(3rem, 8vh, 6rem);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 0.1s;
+    }
+
+    .hero-title {
+      font-size: clamp(3.5rem, 10vw, 9.5rem);
+      line-height: 0.93;
+      letter-spacing: -0.01em;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 0.25s;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 52ch;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 0.42s;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 0.58s;
+    }
+
+    /* ── Section base ── */
+    .section {
+      padding: clamp(4rem, 10vw, 8rem) 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .section-heading {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      font-family: var(--f-disp);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 3rem;
+    }
+
+    /* ── About ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+
+    .prose p + p { margin-top: 1.2em; }
+
+    /* ── How it works ── */
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 3rem;
+    }
+
+    .tab {
+      font-family: var(--f-body);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 1rem 2rem 1rem 0;
+      cursor: pointer;
+      color: var(--muted);
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      background: none;
+      transition: color 0.2s;
+    }
+    .tab.active {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .step-num {
+      font-family: var(--f-disp);
+      font-size: 2.5rem;
+      color: var(--rule);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .step h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+
+    .step p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── For venues ── */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem 3rem;
+      margin-top: 3rem;
+    }
+
+    .feature h3 { font-size: 1.1rem; margin-bottom: 0.6rem; }
+
+    .feature p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .callout {
+      margin-top: 3rem;
+      padding: 2rem 2.25rem;
+      border: 1px solid var(--rule);
+      background: var(--white);
+    }
+    .callout p { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+    .callout strong { font-weight: 500; color: var(--ink); font-family: var(--f-body); }
+
+    /* ── For guests ── */
+    .guest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.75rem;
+      margin-top: 3rem;
+    }
+
+    .guest-card {
+      padding: 2rem;
+      border: 1px solid var(--rule);
+    }
+    .guest-card h3 { font-size: 1.1rem; margin-bottom: 0.55rem; }
+    .guest-card p { font-size: 0.88rem; color: var(--muted); }
+
+    /* ── Participants ── */
+    .placeholder-box {
+      margin-top: 2rem;
+      padding: 4rem 2rem;
+      text-align: center;
+      border: 1px dashed var(--rule);
+      font-family: var(--f-disp);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--muted);
+    }
+
+    /* ── Coffee edition (dark band) ── */
+    .dark-band {
+      background: var(--ink);
+      color: var(--bg);
+      padding: clamp(4rem, 8vw, 7rem) 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .dark-band .section-eyebrow { color: rgba(246,241,232,0.4); }
+    .dark-band .section-heading { color: var(--bg); }
+    .dark-band p { color: rgba(246,241,232,0.65); }
+
+    .edition-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      margin: 2.5rem 0;
+    }
+
+    .meta-item {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: rgba(246,241,232,0.45);
+    }
+    .meta-item strong {
+      display: block;
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--bg);
+      margin-top: 0.2rem;
+    }
+
+    .notify-row {
+      margin-top: 2rem;
+    }
+    .notify-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(246,241,232,0.38);
+      margin-bottom: 0.75rem;
+    }
+    .notify-form {
+      display: flex;
+      max-width: 440px;
+    }
+    .notify-form input {
+      flex: 1;
+      padding: 0.85rem 1.25rem;
+      border: 1.5px solid rgba(246,241,232,0.2);
+      background: rgba(246,241,232,0.06);
+      color: var(--bg);
+      font-family: var(--f-body);
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .notify-form input::placeholder { color: rgba(246,241,232,0.3); }
+    .notify-form input:focus { border-color: rgba(246,241,232,0.45); }
+    .notify-form button {
+      padding: 0.85rem 1.5rem;
+      background: var(--accent);
+      border: 1.5px solid var(--accent);
+      color: var(--white);
+      font-family: var(--f-body);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .notify-form button:hover { opacity: 0.85; }
+    .notify-thanks {
+      display: none;
+      margin-top: 1rem;
+      font-family: var(--f-disp);
+      font-style: italic;
+      font-size: 1rem;
+      color: rgba(246,241,232,0.65);
+    }
+
+    /* ── Application form ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .field.full { grid-column: 1 / -1; }
+
+    .field label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      padding: 0.85rem 1rem;
+      border: 1.5px solid var(--rule);
+      background: var(--white);
+      color: var(--ink);
+      font-family: var(--f-body);
+      font-size: 0.9rem;
+      font-weight: 300;
+      outline: none;
+      border-radius: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: border-color 0.2s;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus { border-color: var(--ink); }
+
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A7B6F' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .field textarea { resize: vertical; min-height: 120px; }
+
+    .form-note {
+      margin-top: 1rem;
+      font-family: var(--f-disp);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .form-success {
+      display: none;
+      padding: 2.5rem 2rem;
+      border: 1px solid var(--rule);
+      background: var(--white);
+      text-align: center;
+    }
+    .form-success p {
+      font-family: var(--f-disp);
+      font-size: 1.35rem;
+      max-width: none;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      padding: clamp(3rem, 6vw, 5rem) 0;
+      background: var(--ink);
+      color: rgba(246,241,232,0.55);
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 3rem;
+      flex-wrap: wrap;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(246,241,232,0.08);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand .nav-logo {
+      display: block;
+      color: var(--bg);
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: rgba(246,241,232,0.38);
+      max-width: 28ch;
+      line-height: 1.6;
+    }
+
+    .footer-col h4 {
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(246,241,232,0.35);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .footer-col ul a,
+    .footer-contact a {
+      font-size: 0.84rem;
+      color: rgba(246,241,232,0.55);
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover,
+    .footer-contact a:hover { color: var(--bg); }
+
+    .footer-contact a { display: block; }
+    .footer-contact a + a { margin-top: 0.4rem; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.73rem;
+      color: rgba(246,241,232,0.28);
+    }
+    .footer-bottom a {
+      color: rgba(246,241,232,0.28);
+      transition: color 0.2s;
+    }
+    .footer-bottom a:hover { color: rgba(246,241,232,0.55); }
+
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      .two-col { grid-template-columns: 1fr; gap: 2rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: 1; }
+      .footer-top { flex-direction: column; gap: 2rem; }
+      .notify-form { flex-direction: column; max-width: 340px; }
+    }
+
+    @media (max-width: 560px) {
+      .steps  { grid-template-columns: 1fr; }
+      .features { grid-template-columns: 1fr; }
+      .guest-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#hero" class="nav-logo">Gastrofest Batumi</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="#for-venues">For venues</a></li>
+      <li><a href="#sponsors">For sponsors</a></li>
+      <li class="nav-apply"><a href="#apply">Apply</a></li>
+    </ul>
+    <button class="nav-burger" id="burger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="#about">About</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#for-venues">For venues</a>
+    <a href="#for-guests">For guests</a>
+    <a href="#sponsors">For sponsors</a>
+    <a href="#apply" class="nav-apply-m">Apply as a venue</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <p class="hero-label">Batumi, Georgia &nbsp;·&nbsp; First edition coming 2025</p>
+      <h1 class="hero-title">Gastro<em>fest</em><br>Batumi</h1>
+      <p class="hero-sub">A gastronomic festival where the city's cafés, bars, and restaurants each create one special set — a unique dish or drink, made specifically for the festival, at a fixed price. You explore the city. They get to show you what they're made of.</p>
+      <div class="hero-ctas">
+        <a href="#apply" class="btn btn-filled">Apply as a Venue</a>
+        <a href="#coffee-edition" class="btn">Stay Updated</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container">
+      <p class="section-eyebrow">What is Gastrofest Batumi</p>
+      <h2 class="section-heading">One city.<br>Many tables.<br>One festival.</h2>
+      <div class="two-col">
+        <div class="prose">
+          <p>Gastrofest is a gastronomic festival format that has been running successfully in Belarus since 2016. We're bringing it to Batumi — for the first time in the city, and likely the first time in Georgia.</p>
+          <p>The idea is simple. A selection of the city's restaurants, bars, and cafés each prepare one exclusive tasting set — a signature combination of food and drink, created specifically for the festival period. Every set is available at the same fixed price across all participating venues. Guests choose where to go, show up, and order. No tickets. No passes. No complicated rules.</p>
+        </div>
+        <div class="prose">
+          <p>The festival runs for a limited time — typically two to three weeks. During that time, the city becomes something to discover. Not just your usual three spots, but twenty places you maybe never tried, each showing you their best.</p>
+          <p>The first Gastrofest Batumi event will be a coffee festival — around 15–20 of the city's coffee shops, each offering one special coffee drink and a dessert made for the occasion, all at 25 lari.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <p class="section-eyebrow">How the festival works</p>
+      <h2 class="section-heading">The same simple<br>mechanics, every edition.</h2>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-panel="guests" role="tab" aria-selected="true">For Guests</button>
+        <button class="tab" data-panel="venues" role="tab" aria-selected="false">For Venues</button>
+      </div>
+
+      <div class="panel active" id="panel-guests">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <h3>Browse the participants</h3>
+            <p>Before the festival starts, all participating venues and their sets are published on this website and our social media. You can see exactly what each place is offering and what it costs. No surprises.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <h3>Pick your spots</h3>
+            <p>Choose one place or choose ten. There's no pass to buy, no ticket to book. Just show up at any participating venue during the festival period and order the festival set.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <h3>Discover something new</h3>
+            <p>That coffee shop you've walked past a hundred times. The festival is a good reason to finally go — and a comfortable one, because you already know what you're getting and what you'll pay.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <h3>Vote for your favorite</h3>
+            <p>During the festival, guests vote for the sets they loved most. At the end, we announce the top venues. Bragging rights included.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-venues">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <h3>Apply</h3>
+            <p>Fill out the short form on this page. We'll get in touch to walk you through everything.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <h3>Create your set</h3>
+            <p>You design one exclusive set for the festival — a signature combination that represents your place. Our team will give you feedback before it's finalized. The set needs to be genuinely good and visually appealing.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <h3>We handle the promotion</h3>
+            <p>Your venue gets featured on the Gastrofest Batumi website, in all festival communications, and across our social media. Guests come to you — you focus on delivering a great experience.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <h3>You keep the guests</h3>
+            <p>The festival ends. The relationship doesn't have to. Guests who discovered you during Gastrofest are now potential regulars. What happens next is up to you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR VENUES -->
+  <section class="section" id="for-venues">
+    <div class="container">
+      <p class="section-eyebrow">For Restaurants &amp; Bars</p>
+      <h2 class="section-heading">Why participate</h2>
+      <p class="section-sub">Gastrofest isn't a one-time traffic spike. It's an introduction between your venue and people who didn't know you yet.</p>
+      <div class="features">
+        <div class="feature">
+          <h3>New guests who actually show up</h3>
+          <p>Batumi has a lot of places to eat and drink. Most people rotate through the same handful of spots. Gastrofest disrupts that habit — it gives people a specific, low-risk reason to try somewhere new. Your venue gets in front of an audience that was never going to find you through Instagram alone.</p>
+        </div>
+        <div class="feature">
+          <h3>Promotion you don't have to build yourself</h3>
+          <p>Every participating venue gets a dedicated page on the Gastrofest Batumi website with your set, your details, and your story. You're featured in all festival announcements, social media posts, and communications to our audience. The promotional infrastructure is already there.</p>
+        </div>
+        <div class="feature">
+          <h3>A real marketing moment, not just a discount</h3>
+          <p>This isn't a delivery app deal where you cut your margins and hope for volume. You're designing one special set — something that represents your venue at its best. It's a creative exercise as much as a commercial one.</p>
+        </div>
+        <div class="feature">
+          <h3>Honest feedback from real guests</h3>
+          <p>The voting mechanic means guests are actively paying attention to what you offer. You'll see how people respond to your set, read the reactions, and understand what lands. That kind of direct feedback is hard to get otherwise.</p>
+        </div>
+        <div class="feature">
+          <h3>You're part of something the city hasn't seen before</h3>
+          <p>This is the first event of this kind in Batumi. The venues that participate in the first edition are the ones who helped build it. That's a different kind of visibility than joining something that already exists.</p>
+        </div>
+      </div>
+      <div class="callout">
+        <p><strong>A note on how participation works:</strong> The number of participating venues per edition is limited. Not every application will be accepted — sets go through a light review process to make sure the festival maintains a consistent standard. This isn't to be exclusive for the sake of it. It's to make sure that when guests show up, they have a genuinely good experience — which is what brings them back to your venue after the festival ends.</p>
+      </div>
+      <div style="margin-top: 2.5rem;">
+        <a href="#apply" class="btn btn-filled">Apply as a Venue</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR GUESTS -->
+  <section class="section" id="for-guests">
+    <div class="container">
+      <p class="section-eyebrow">For Guests</p>
+      <h2 class="section-heading">What's in it for you</h2>
+      <p class="section-sub">A festival where the whole city is the venue.</p>
+      <div class="guest-grid">
+        <div class="guest-card">
+          <h3>Discover places you've been meaning to try</h3>
+          <p>Gastrofest is a good excuse to finally go — and a comfortable one, because you already know what each place is offering and exactly what it costs before you walk in.</p>
+        </div>
+        <div class="guest-card">
+          <h3>A set made specifically for the festival</h3>
+          <p>Every participating venue creates something exclusive for Gastrofest — not a random item from the regular menu, but a combination put together specifically for this occasion.</p>
+        </div>
+        <div class="guest-card">
+          <h3>Fixed price, everywhere</h3>
+          <p>Every set costs the same fixed price across all participating venues. No guessing, no bill anxiety, no "let me check if I can afford this place." You already know.</p>
+        </div>
+        <div class="guest-card">
+          <h3>Go once or go ten times</h3>
+          <p>There's no pass to buy and no ticket to collect. Come for one venue or make a proper run of it — visit five coffee shops in a week, compare, form opinions.</p>
+        </div>
+        <div class="guest-card">
+          <h3>Vote for your favorites</h3>
+          <p>At the end of your visit, you get to vote for the sets you loved. At the close of the festival, we announce the top venues. It makes the whole experience feel like it means something.</p>
+        </div>
+      </div>
+      <p style="margin-top: 2.5rem; font-family: var(--f-disp); font-style: italic; color: var(--muted); font-size: 1rem; max-width: 56ch;">The first Gastrofest Batumi edition is a coffee festival. Around 15–20 of the city's coffee shops, each with one special coffee drink and a dessert, all at 25 lari. Dates to be announced soon.</p>
+      <div style="margin-top: 2rem;">
+        <a href="#coffee-edition" class="btn">Stay Updated</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTICIPANTS -->
+  <section class="section" id="participants">
+    <div class="container">
+      <p class="section-eyebrow">Participating Venues</p>
+      <h2 class="section-heading">The participants</h2>
+      <p style="margin-top: 1rem; color: var(--muted); font-size: 0.9rem; max-width: 56ch;">The first edition of Gastrofest Batumi is currently in preparation. Participating venues will be announced here as they're confirmed.</p>
+      <div class="placeholder-box">Venues coming soon</div>
+      <p style="margin-top: 1.5rem; font-size: 0.88rem; color: var(--muted);">
+        If you own a café, bar, or restaurant in Batumi and want to be on this list,
+        <a href="#apply" style="color: var(--accent); text-decoration: underline; text-underline-offset: 3px;">apply below</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- COFFEE EDITION -->
+  <section class="dark-band" id="coffee-edition">
+    <div class="container">
+      <p class="section-eyebrow">First Edition</p>
+      <h2 class="section-heading" style="font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 1.5rem;">
+        First up —<br>a coffee festival
+      </h2>
+      <p style="max-width: 52ch;">The first Gastrofest Batumi edition is dedicated to coffee. Around 15–20 of the city's coffee shops will each prepare one exclusive festival set — a special coffee drink and a dessert, created specifically for the occasion. One fixed price across every participating venue.</p>
+      <p style="margin-top: 0.9rem; max-width: 52ch; font-family: var(--f-disp); font-style: italic; font-size: 1rem; color: rgba(246,241,232,0.45);">Batumi has a genuinely interesting coffee scene. This is a chance to see all of it.</p>
+      <div class="edition-meta">
+        <div class="meta-item">Location<strong>Batumi, Georgia</strong></div>
+        <div class="meta-item">Dates<strong>To be announced</strong></div>
+        <div class="meta-item">Set price<strong>25 GEL</strong></div>
+      </div>
+      <div class="notify-row">
+        <p class="notify-label">Get notified when it launches</p>
+        <form class="notify-form" id="notify-form">
+          <input type="email" placeholder="Your email address" required>
+          <button type="submit">Notify me</button>
+        </form>
+        <p class="notify-thanks" id="notify-thanks">You're on the list. We'll be in touch.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPONSORS -->
+  <section class="section" id="sponsors">
+    <div class="container">
+      <p class="section-eyebrow">For Sponsors</p>
+      <h2 class="section-heading">Partner with<br>Gastrofest Batumi</h2>
+      <div class="two-col" style="margin-top: 2.5rem;">
+        <div class="prose">
+          <p>Gastrofest Batumi is a city-wide event that brings together local businesses and a food-curious audience in one focused moment. For the right partners, it's a natural fit.</p>
+          <p>We're currently putting together partnership formats for the first edition. If your brand is interested in being part of the launch of something genuinely new in Batumi — and in Georgia — we'd like to talk.</p>
+          <p>Sponsorship can take different shapes depending on what makes sense for your brand. Reach out and let's figure out what works.</p>
+        </div>
+        <div style="display: flex; align-items: flex-start; padding-top: 0.25rem;">
+          <a href="mailto:partners@gastrofestbatumi.ge" class="btn btn-filled">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATION FORM -->
+  <section class="section" id="apply">
+    <div class="container">
+      <p class="section-eyebrow">Application Form</p>
+      <h2 class="section-heading">Apply as a venue</h2>
+      <p class="section-sub">Fill out the form below and we'll get back to you with everything you need to know about participating in the first edition.</p>
+
+      <div class="form-success" id="form-success">
+        <p>Thank you — we've received your application and we'll be in touch.</p>
+      </div>
+
+      <form class="form-grid" id="apply-form" novalidate>
+        <div class="field">
+          <label for="venue-name">Venue name</label>
+          <input type="text" id="venue-name" required>
+        </div>
+        <div class="field">
+          <label for="venue-type">Type of venue</label>
+          <select id="venue-type" required>
+            <option value="" disabled selected></option>
+            <option value="cafe">Café</option>
+            <option value="bar">Bar</option>
+            <option value="restaurant">Restaurant</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="contact-name">Your name</label>
+          <input type="text" id="contact-name" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone">
+        </div>
+        <div class="field full">
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="field full">
+          <label for="about-venue">
+            Anything you'd like to tell us about your venue
+            <span style="font-size: 0.65rem; opacity: 0.55; margin-left: 0.3em;">(optional)</span>
+          </label>
+          <textarea id="about-venue"></textarea>
+        </div>
+        <div class="field full">
+          <button type="submit" class="btn btn-filled" style="width: fit-content;">Send Application</button>
+          <p class="form-note">We review all applications and get back to everyone who applies. The number of spots per edition is limited.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#hero" class="nav-logo">Gastrofest Batumi</a>
+        <p class="footer-tagline">The city's first gastronomic festival.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#for-venues">For venues</a></li>
+          <li><a href="#sponsors">For sponsors</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Telegram</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
+        <a href="mailto:venues@gastrofestbatumi.ge">Venue applications &amp; commercial enquiries</a>
+        <a href="mailto:press@gastrofestbatumi.ge">Press &amp; partnerships</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Gastrofest Batumi. All rights reserved.</span>
+      <a href="#">Terms of participation for venues</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const burger = document.getElementById('burger');
+  const navMobile = document.getElementById('nav-mobile');
+
+  burger.addEventListener('click', () => {
+    const open = burger.classList.toggle('open');
+    navMobile.style.display = open ? 'flex' : 'none';
+  });
+
+  navMobile.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navMobile.style.display = 'none';
+    });
+  });
+
+  // How it works tabs
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+    });
+  });
+
+  // Notify form
+  document.getElementById('notify-form').addEventListener('submit', e => {
+    e.preventDefault();
+    e.target.style.display = 'none';
+    document.getElementById('notify-thanks').style.display = 'block';
+  });
+
+  // Application form
+  document.getElementById('apply-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const form = e.target;
+    const success = document.getElementById('form-success');
+    form.style.display = 'none';
+    success.style.display = 'block';
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+</script>
+</body>
+</html>
