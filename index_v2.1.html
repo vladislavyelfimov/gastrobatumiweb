@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gastrofest Batumi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F6F1E8;
+      --paper: #EEE5D7;
+      --ink: #17120F;
+      --muted: #746960;
+      --soft: #A99E92;
+      --rule: #DCCFBD;
+      --accent: #C94B1F;
+      --wine: #6D2326;
+      --sea: #8EADB3;
+      --white: #FEFCF8;
+      --f-display: 'Cormorant Garamond', Georgia, serif;
+      --f-body: 'Jost', Arial, sans-serif;
+      --max: 1180px;
+      --gutter: clamp(1.35rem, 5vw, 3rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background:
+        radial-gradient(rgba(23, 18, 15, 0.045) 1px, transparent 1px),
+        var(--bg);
+      background-size: 5px 5px;
+      color: var(--ink);
+      font-family: var(--f-body);
+      font-size: 16px;
+      line-height: 1.65;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--f-display);
+      font-weight: 500;
+      line-height: 0.96;
+      letter-spacing: -0.025em;
+    }
+
+    p { max-width: 64ch; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .chapter-label {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+
+      color: var(--muted);
+    }
+
+    .chapter-label span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 2rem;
+      height: 2rem;
+
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+
+      font-size: 0.68rem;
+      color: var(--accent);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 0 1.9rem;
+      border: 1.5px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      font-family: var(--f-body);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .btn-filled {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--white);
+    }
+
+    .btn-filled:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .btn-note {
+      display: block;
+      margin-top: 0.55rem;
+      font-size: 0.72rem;
+      color: var(--soft);
+      text-align: center;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(246, 241, 232, 0.94);
+      border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .nav-logo {
+      font-family: var(--f-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.025em;
+    }
+
+    .nav-logo em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.35rem;
+      list-style: none;
+    }
+
+    .nav-links a,
+    .nav-mobile a {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-mobile a:hover { color: var(--ink); }
+    .nav-links .nav-apply a,
+    .nav-mobile a.nav-apply-m { color: var(--accent); }
+
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .nav-burger span {
+      display: block;
+      width: 28px;
+      height: 1.5px;
+      background: var(--ink);
+      transition: transform 0.25s, opacity 0.25s;
+    }
+
+    .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      border-top: 1px solid var(--rule);
+      background: var(--bg);
+    }
+
+    .nav-mobile a {
+      display: block;
+      padding: 1rem var(--gutter);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero {
+      min-height: calc(100svh - 70px);
+      display: flex;
+      align-items: center;
+      padding: clamp(3.5rem, 7vw, 6rem) 0;
+      border-bottom: 1px solid var(--rule);
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+      gap: clamp(3rem, 7vw, 6rem);
+      align-items: center;
+    }
+
+    .hero-copy > * {
+      opacity: 0;
+      animation: fadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-label { margin-bottom: 2.2rem; animation-delay: 0.05s; }
+
+    .hero-title {
+      max-width: 780px;
+      margin-bottom: 2.4rem;
+      font-size: clamp(5rem, 11.5vw, 10.8rem);
+      line-height: 0.84;
+      letter-spacing: -0.045em;
+    }
+
+    .hero-title em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      max-width: 48ch;
+      margin-bottom: 2.6rem;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.25vw, 1.15rem);
+      line-height: 1.72;
+      animation-delay: 0.18s;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      animation-delay: 0.3s;
+    }
+
+    .hero-facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      max-width: 620px;
+      animation-delay: 0.42s;
+    }
+
+    .fact {
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .fact strong {
+      display: block;
+      font-family: var(--f-display);
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .fact span {
+      display: block;
+      margin-top: 0.35rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 560px;
+      padding: 2rem;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      animation: fadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 0.35s;
+      opacity: 0;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 1rem;
+      border: 1px solid rgba(23, 18, 15, 0.14);
+      pointer-events: none;
+    }
+
+    .poster-tag {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      max-width: 11rem;
+      color: var(--muted);
+      font-family: var(--f-display);
+      font-size: 1.5rem;
+      font-style: italic;
+      line-height: 1.05;
+      transform: rotate(-4deg);
+    }
+
+    .poster-main {
+      position: absolute;
+      left: 2rem;
+      right: 2rem;
+      bottom: 2rem;
+    }
+
+    .poster-price {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .poster-title {
+      margin-bottom: 1.5rem;
+      font-family: var(--f-display);
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      line-height: 0.86;
+      letter-spacing: -0.03em;
+    }
+
+    .poster-title em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .poster-text {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .section {
+      padding: clamp(5.5rem, 11vw, 10rem) 0;
+      border-bottom: 1px solid rgba(23, 18, 15, 0.12);
+    }
+
+    .section-header {
+      max-width: 700px;
+      margin-bottom: clamp(3.4rem, 7vw, 5.5rem);
+    }
+
+    .section-eyebrow { margin-bottom: 1.25rem; }
+
+    .section-heading {
+      margin-bottom: 1.4rem;
+      font-size: clamp(3.4rem, 7.4vw, 7.4rem);
+      line-height: 0.88;
+      letter-spacing: -0.045em;
+    }
+
+    .section-heading em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .section-sub {
+      max-width: 48ch;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.35vw, 1.12rem);
+      line-height: 1.72;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: clamp(2.5rem, 6vw, 5rem);
+      align-items: start;
+    }
+
+    .large-quote {
+      max-width: 12ch;
+      font-family: var(--f-display);
+      font-size: clamp(3.2rem, 7vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+    }
+
+    .large-quote em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .prose {
+      columns: 2 260px;
+      column-gap: 3rem;
+    }
+
+    .prose p {
+      break-inside: avoid;
+      margin-bottom: 1.2em;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 0;
+    }
+
+    .tab {
+      padding: 1.1rem 2.4rem 1.1rem 0;
+      border: none;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
+      background: none;
+      color: var(--muted);
+      font-family: var(--f-body);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .tab.active {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--rule);
+    }
+
+    .step {
+      min-height: 320px;
+      padding: 2.5rem 1.8rem 2.2rem;
+      border-right: 1px solid var(--rule);
+    }
+
+    .step:last-child { border-right: 0; }
+
+    .step-num {
+      display: block;
+      margin-bottom: 2.1rem;
+      color: var(--accent);
+      font-family: var(--f-display);
+      font-size: 3rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .step h3 {
+      margin-bottom: 1rem;
+      font-size: 1.75rem;
+      line-height: 0.98;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .paper-section { background: var(--paper); }
+
+    .feature-grid,
+    .guest-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+
+    .feature,
+    .guest-card {
+      min-height: 270px;
+      padding: 2rem;
+      background: var(--bg);
+    }
+
+    .feature h3,
+    .guest-card h3 {
+      margin-bottom: 1rem;
+      font-size: 1.65rem;
+      line-height: 1;
+    }
+
+    .feature p,
+    .guest-card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .callout {
+      margin-top: 2.5rem;
+      padding: 2rem;
+      border: 1px solid var(--rule);
+      background: var(--white);
+    }
+
+    .callout p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    .callout strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .city-strip {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: start;
+    }
+
+    .venue-preview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .venue-card {
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.2rem;
+      background:
+        linear-gradient(180deg, rgba(23,18,15,0.08), rgba(23,18,15,0.92)),
+        var(--ink);
+      color: var(--bg);
+    }
+
+    .venue-card:nth-child(2) { background: linear-gradient(180deg, rgba(23,18,15,0.1), rgba(23,18,15,0.92)), var(--wine); }
+    .venue-card:nth-child(3) { background: linear-gradient(180deg, rgba(23,18,15,0.1), rgba(23,18,15,0.92)), #263F43; }
+
+    .venue-card h3 {
+      margin-bottom: 0.25rem;
+      font-family: var(--f-body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .venue-card p {
+      color: rgba(246,241,232,0.65);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .venue-card strong {
+      display: block;
+      margin-top: 1rem;
+      color: var(--accent);
+      font-size: 0.88rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .placeholder-box {
+      margin-top: 2rem;
+      padding: 4rem 2rem;
+      border: 1px dashed var(--rule);
+      color: var(--muted);
+      text-align: center;
+      font-family: var(--f-display);
+      font-size: 1.35rem;
+      font-style: italic;
+    }
+
+    .dark-band {
+      padding: clamp(4.5rem, 9vw, 8rem) 0;
+      background: var(--ink);
+      color: var(--bg);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .dark-band .eyebrow { color: rgba(246,241,232,0.45); }
+    .dark-band .section-heading { color: var(--bg); }
+    .dark-band p { color: rgba(246,241,232,0.68); }
+
+    .edition-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      max-width: 760px;
+      margin: 2.5rem 0;
+    }
+
+    .meta-item {
+      padding-top: 1rem;
+      border-top: 1px solid rgba(246,241,232,0.18);
+      color: rgba(246,241,232,0.42);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .meta-item strong {
+      display: block;
+      margin-top: 0.3rem;
+      color: var(--bg);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .notify-row { margin-top: 2rem; }
+
+    .notify-label {
+      margin-bottom: 0.8rem;
+      color: rgba(246,241,232,0.42);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .notify-form {
+      display: flex;
+      max-width: 500px;
+    }
+
+    .notify-form input {
+      flex: 1;
+      padding: 0.9rem 1.1rem;
+      border: 1.5px solid rgba(246,241,232,0.22);
+      background: rgba(246,241,232,0.06);
+      color: var(--bg);
+      font-family: var(--f-body);
+      font-size: 0.92rem;
+      outline: none;
+    }
+
+    .notify-form input::placeholder { color: rgba(246,241,232,0.35); }
+
+    .notify-form button {
+      padding: 0 1.5rem;
+      border: 1.5px solid var(--accent);
+      background: var(--accent);
+      color: var(--white);
+      font-family: var(--f-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .notify-thanks {
+      display: none;
+      margin-top: 1rem;
+      color: rgba(246,241,232,0.65);
+      font-family: var(--f-display);
+      font-size: 1.1rem;
+      font-style: italic;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.4rem;
+      margin-top: 3rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    .field label {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      padding: 0.9rem 1rem;
+      border: 1.5px solid var(--rule);
+      border-radius: 0;
+      background: var(--white);
+      color: var(--ink);
+      font-family: var(--f-body);
+      font-size: 0.95rem;
+      font-weight: 300;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: border-color 0.2s;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus { border-color: var(--ink); }
+
+    .field select {
+      padding-right: 2.5rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23746960' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+    }
+
+    .field textarea {
+      min-height: 125px;
+      resize: vertical;
+    }
+
+    .form-note {
+      margin-top: 0.2rem;
+      color: var(--muted);
+      font-family: var(--f-display);
+      font-size: 1rem;
+      font-style: italic;
+    }
+
+    .form-success {
+      display: none;
+      padding: 2.5rem 2rem;
+      border: 1px solid var(--rule);
+      background: var(--white);
+      text-align: center;
+    }
+
+    .form-success p {
+      max-width: none;
+      font-family: var(--f-display);
+      font-size: 1.45rem;
+    }
+
+    .footer {
+      padding: clamp(3rem, 6vw, 5rem) 0;
+      background: var(--ink);
+      color: rgba(246,241,232,0.55);
+    }
+
+    .footer-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(246,241,232,0.08);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand .nav-logo {
+      display: block;
+      margin-bottom: 0.75rem;
+      color: var(--bg);
+      font-size: 1.25rem;
+    }
+
+    .footer-tagline {
+      max-width: 28ch;
+      color: rgba(246,241,232,0.38);
+      font-size: 0.84rem;
+      line-height: 1.6;
+    }
+
+    .footer-col h4 {
+      margin-bottom: 1rem;
+      color: rgba(246,241,232,0.35);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .footer-col ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      list-style: none;
+    }
+
+    .footer-col ul a,
+    .footer-contact a {
+      color: rgba(246,241,232,0.55);
+      font-size: 0.84rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover,
+    .footer-contact a:hover { color: var(--bg); }
+    .footer-contact a { display: block; }
+    .footer-contact a + a { margin-top: 0.4rem; }
+
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      color: rgba(246,241,232,0.28);
+      font-size: 0.74rem;
+    }
+
+    .footer-bottom a { color: rgba(246,241,232,0.28); }
+    .footer-bottom a:hover { color: rgba(246,241,232,0.55); }
+
+    .chapter-indicator {
+    position: fixed;
+    left: 1.2rem;
+    top: 50%;
+    z-index: 90;
+
+    display: flex;
+    gap: 0.35rem;
+    align-items: center;
+
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    writing-mode: vertical-rl;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+    .chapter-indicator span:first-child {
+      color: var(--accent);
+    }
+
+    @media (max-width: 980px) {
+      .chapter-indicator {
+        display: none;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .split,
+      .city-strip { grid-template-columns: 1fr; }
+      .hero-card { min-height: 430px; }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .step:nth-child(2n) { border-right: 0; }
+      .step:nth-child(-n + 2) { border-bottom: 1px solid var(--rule); }
+      .feature-grid,
+      .guest-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: 1; }
+      .footer-top { flex-direction: column; gap: 2rem; }
+      .notify-form { flex-direction: column; max-width: 360px; }
+      .notify-form button { min-height: 52px; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-inner { height: 64px; }
+      .hero { min-height: auto; padding: 4.5rem 0 4rem; }
+      .hero-title { font-size: clamp(4.2rem, 18vw, 6rem); }
+      .hero-ctas { flex-direction: column; }
+      .btn { width: 100%; }
+      .hero-facts,
+      .edition-meta,
+      .venue-preview { grid-template-columns: 1fr; }
+      .hero-card { display: none; }
+      .section-heading { font-size: clamp(3.2rem, 14vw, 4.7rem); }
+      .prose { columns: 1; }
+      .tabs { overflow-x: auto; }
+      .tab { white-space: nowrap; }
+      .steps,
+      .feature-grid,
+      .guest-grid { grid-template-columns: 1fr; }
+      .step {
+        min-height: auto;
+        padding: 2.2rem 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--rule);
+      }
+      .step:last-child { border-bottom: 0; }
+      .step:nth-child(-n + 2) { border-bottom: 1px solid var(--rule); }
+      .feature,
+      .guest-card { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="chapter-indicator" id="chapter-indicator">
+  <span id="chapter-current">01</span>
+  <span>/ 07</span>
+</div>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#hero" class="nav-logo">Gastro<em>fest</em> Batumi</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="#for-venues">For venues</a></li>
+      <li><a href="#for-guests">For guests</a></li>
+      <li><a href="#sponsors">Sponsors</a></li>
+      <li class="nav-apply"><a href="#apply">Apply</a></li>
+    </ul>
+    <button class="nav-burger" id="burger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="#about">About</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#for-venues">For venues</a>
+    <a href="#for-guests">For guests</a>
+    <a href="#sponsors">Sponsors</a>
+    <a href="#apply" class="nav-apply-m">Apply as a venue</a>
+  </div>
+</nav>
+
+<main>
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow hero-label">Batumi, Georgia · First edition 2026</p>
+        <h1 class="hero-title">Batumi<br><em>Gastrofest</em></h1>
+        <p class="hero-sub">A city-wide gastronomic festival where cafés, bars, and restaurants create one special set for a fixed price. No tickets. No passes. Just choose a place, show up, and order.</p>
+        <div class="hero-ctas">
+          <div>
+            <a href="#apply" class="btn btn-filled">Apply as a venue</a>
+            <span class="btn-note">For cafés, bars & restaurants</span>
+          </div>
+          <div>
+            <a href="#coffee-edition" class="btn">Stay updated</a>
+            <span class="btn-note">Get the first venue list</span>
+          </div>
+        </div>
+        <div class="hero-facts" aria-label="Festival facts">
+          <div class="fact"><strong>20+</strong><span>venues to discover</span></div>
+          <div class="fact"><strong>2–3</strong><span>weeks of city tasting</span></div>
+          <div class="fact"><strong>1</strong><span>fixed price per edition</span></div>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Festival poster preview">
+        <p class="poster-tag">New places.<br>New tastes.</p>
+        <div class="poster-main">
+          <span class="poster-price">First up · 25 GEL</span>
+          <div class="poster-title">Coffee<br><em>edition</em></div>
+          <p class="poster-text">Batumi’s coffee shops create one drink and dessert set each. You walk the city, compare, vote, and maybe find your new regular spot.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="container split">
+      <div>
+        <p class="chapter-label">
+          <span>01</span>
+          What is Gastrofest Batumi?
+        </p>
+        <div class="large-quote">The city becomes <em>a menu.</em></div>
+      </div>
+      <div class="prose">
+        <p>Gastrofest is a city-wide food festival format. For a limited time, selected venues each prepare one exclusive tasting set created specifically for the festival.</p>
+        <p>Every set is available at the same fixed price across all participating venues. Guests see the full list, choose where to go, show up, and order. No tickets. No passes. No complicated rules.</p>
+        <p>We’re bringing the format to Batumi for the first time. The idea is simple: turn familiar streets into a reason to explore cafés, bars, and restaurants people usually walk past.</p>
+        <p>The first edition will focus on coffee: around 15–20 coffee shops, each with one special coffee drink and dessert set, all at 25 GEL.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section paper-section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <p class="chapter-label">
+          <span>02</span>
+          How it works
+        </p>
+        <h2 class="section-heading">Three simple<br><em>routes.</em></h2>
+        <p class="section-sub">The mechanics stay clear for every edition: find the venues, pick your route, order the set, vote for what you loved.</p>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-panel="guests" role="tab" aria-selected="true">For guests</button>
+        <button class="tab" data-panel="venues" role="tab" aria-selected="false">For venues</button>
+      </div>
+
+      <div class="panel active" id="panel-guests">
+        <div class="steps">
+          <article class="step">
+            <span class="step-num">01</span>
+            <h3>Browse the participants</h3>
+            <p>Before the festival starts, we publish all participating venues, their sets, prices, and details. You know what you’re getting before you go.</p>
+          </article>
+          <article class="step">
+            <span class="step-num">02</span>
+            <h3>Pick your spots</h3>
+            <p>Choose one place or plan a full route. There’s no pass to buy and no booking ritual. Just arrive during the festival and order the set.</p>
+          </article>
+          <article class="step">
+            <span class="step-num">03</span>
+            <h3>Discover something new</h3>
+            <p>Try the café you always pass, the bar you saved months ago, or the restaurant you never had a reason to enter until now.</p>
+          </article>
+          <article class="step">
+            <span class="step-num">04</span>
+            <h3>Vote for your favorite</h3>
+            <p>Guests vote for the sets they loved most. At the end, we announce the top venues. Bragging rights included.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-venues">
+        <div class="steps">
+          <article class="step">
+            <span class="step-num">01</span>
+            <h3>Apply</h3>
+            <p>Fill out the form and tell us about your venue. We’ll get back with the edition details and participation requirements.</p>
+          </article>
+          <article class="step">
+            <span class="step-num">02</span>
+            <h3>Create your set</h3>
+            <p>Design one exclusive festival set that represents your place. It should be clear, visually appealing, and genuinely worth trying.</p>
+          </article>
+          <article class="step">
+            <span class="step-num">03</span>
+            <h3>Get featured</h3>
+            <p>Your venue appears on the Gastrofest website, in festival announcements, and across social communication before and during the event.</p>
+          </article>
+          <article class="step">
+            <span class="step-num">04</span>
+            <h3>Keep the guests</h3>
+            <p>The festival brings people in. Your food, service, and atmosphere decide whether they come back after the edition ends.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="for-venues">
+    <div class="container">
+      <div class="section-header">
+        <p class="chapter-label">
+          <span>03</span>
+          For restaurants and bars
+        </p>
+        <h2 class="section-heading">A real reason<br>to be discovered.</h2>
+        <p class="section-sub">Gastrofest is not a discount mechanic. It is a focused moment where your venue gets introduced to people who may not have found you otherwise.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature">
+          <h3>New guests who actually show up</h3>
+          <p>People tend to revisit the same familiar places. Gastrofest gives them a low-risk reason to try somewhere new.</p>
+        </article>
+        <article class="feature">
+          <h3>Promotion you don’t build alone</h3>
+          <p>Each venue gets a place on the website and in festival communication, with the set, details, and story presented clearly.</p>
+        </article>
+        <article class="feature">
+          <h3>A creative marketing moment</h3>
+          <p>You create one special set that shows your venue at its best instead of simply lowering the price of regular menu items.</p>
+        </article>
+        <article class="feature">
+          <h3>Useful guest feedback</h3>
+          <p>The voting mechanic gives you a clearer sense of what people noticed, liked, shared, and remembered.</p>
+        </article>
+        <article class="feature">
+          <h3>First-edition visibility</h3>
+          <p>The venues joining early help shape the first edition of a format Batumi has not seen before.</p>
+        </article>
+        <article class="feature">
+          <h3>A standard worth keeping</h3>
+          <p>Applications and sets go through a light review so the guest experience stays consistent across the festival.</p>
+        </article>
+      </div>
+      <div class="callout">
+        <p><strong>Participation is limited.</strong> Not every application will be accepted. The review is there to protect the quality of the festival, the guest experience, and the venues that take part.</p>
+      </div>
+      <div style="margin-top: 2.5rem;">
+        <a href="#apply" class="btn btn-filled">Apply as a venue</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section paper-section" id="for-guests">
+    <div class="container city-strip">
+      <div>
+        <p class="chapter-label">
+          <span>04</span>
+          For guests
+        </p>
+        <h2 class="section-heading">Batumi tastes<br>different <em>here.</em></h2>
+        <p class="section-sub">From tiny coffee shops to wine bars and seaside restaurants, the festival turns the city into a route of fixed-price tasting sets.</p>
+        <div style="margin-top: 2rem;">
+          <a href="#coffee-edition" class="btn">Stay updated</a>
+        </div>
+      </div>
+      <div class="venue-preview" aria-label="Example venue cards">
+        <article class="venue-card">
+          <h3>Chaika</h3>
+          <p>Coffee drink + dessert set</p>
+          <strong>25 GEL</strong>
+        </article>
+        <article class="venue-card">
+          <h3>Miris Kafe</h3>
+          <p>Specialty coffee set</p>
+          <strong>25 GEL</strong>
+        </article>
+        <article class="venue-card">
+          <h3>Ferma</h3>
+          <p>Festival tasting set</p>
+          <strong>25 GEL</strong>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="participants">
+    <div class="container">
+      <div class="section-header">
+        <p class="chapter-label">
+          <span>05</span>
+          Participating venues
+        </p>
+        <h2 class="section-heading">The first list<br>is coming.</h2>
+        <p class="section-sub">The first edition is in preparation. Participating venues will appear here as they are confirmed.</p>
+      </div>
+      <div class="placeholder-box">Venues coming soon</div>
+      <p style="margin-top: 1.5rem; color: var(--muted); font-size: 0.92rem;">
+        Own a café, bar, or restaurant in Batumi? <a href="#apply" style="color: var(--accent); text-decoration: underline; text-underline-offset: 3px;">Apply below</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="dark-band" id="coffee-edition">
+    <div class="container">
+      <div class="section-header">
+        <p class="chapter-label">
+          <span>06</span>
+          First edition
+        </p>
+        <h2 class="section-heading">First up —<br>a coffee festival.</h2>
+        <p class="section-sub">Around 15–20 Batumi coffee shops will each create one exclusive festival set: a special coffee drink and a dessert, made for the occasion.</p>
+      </div>
+      <div class="edition-meta">
+        <div class="meta-item">Location<strong>Batumi, Georgia</strong></div>
+        <div class="meta-item">Dates<strong>To be announced</strong></div>
+        <div class="meta-item">Set price<strong>25 GEL</strong></div>
+      </div>
+      <div class="notify-row">
+        <p class="notify-label">Get notified when it launches</p>
+        <form class="notify-form" id="notify-form">
+          <input type="email" name="email" placeholder="Your email address" required>
+          <button type="submit">Notify me</button>
+        </form>
+        <p class="notify-thanks" id="notify-thanks">You’re on the list. We’ll be in touch.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sponsors">
+    <div class="container split">
+      <div>
+        <p class="chapter-label">
+          <span>07</span>
+          For sponsors
+        </p>
+        <h2 class="section-heading">Partner with<br>the city’s first <em>Gastrofest.</em></h2>
+      </div>
+      <div>
+        <p class="section-sub">Gastrofest Batumi brings together local venues and a food-curious audience in one focused city-wide moment. If your brand fits the first edition, let’s talk.</p>
+        <div style="margin-top: 2rem;">
+          <a href="mailto:partners@gastrofestbatumi.ge" class="btn btn-filled">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section paper-section" id="apply">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow section-eyebrow">Application form</p>
+        <h2 class="section-heading">Apply as<br>a venue.</h2>
+        <p class="section-sub">Fill out the form and we’ll get back to you with everything you need to know about joining the first edition.</p>
+      </div>
+
+      <div class="form-success" id="form-success">
+        <p>Thank you — we’ve received your application and we’ll be in touch.</p>
+      </div>
+
+      <form class="form-grid" id="apply-form" novalidate>
+        <div class="field">
+          <label for="venue-name">Venue name</label>
+          <input type="text" id="venue-name" name="venue_name" required>
+        </div>
+        <div class="field">
+          <label for="venue-type">Type of venue</label>
+          <select id="venue-type" name="venue_type" required>
+            <option value="" disabled selected></option>
+            <option value="cafe">Coffeeshop</option>
+            <option value="cafe">Café</option>
+            <option value="bar">Bar</option>
+            <option value="restaurant">Restaurant</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="contact-name">Your name</label>
+          <input type="text" id="contact-name" name="contact_name" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+        <div class="field full">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field full">
+          <label for="about-venue">Anything you'd like to tell us about your venue <span style="font-size: 0.65rem; opacity: 0.55; margin-left: 0.3em;">optional</span></label>
+          <textarea id="about-venue" name="about_venue"></textarea>
+        </div>
+        <div class="field full">
+          <button type="submit" class="btn btn-filled" style="width: fit-content;">Send application</button>
+          <p class="form-note">We review all applications. The number of spots per edition is limited.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#hero" class="nav-logo">Gastro<em>fest</em> Batumi</a>
+        <p class="footer-tagline">A city-wide gastronomic festival. First edition coming to Batumi.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#for-venues">For venues</a></li>
+          <li><a href="#sponsors">Sponsors</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Telegram</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
+        <a href="mailto:venues@gastrofestbatumi.ge">Venue applications & commercial enquiries</a>
+        <a href="mailto:press@gastrofestbatumi.ge">Press & partnerships</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Gastrofest Batumi. All rights reserved.</span>
+      <a href="#">Terms of participation for venues</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const burger = document.getElementById('burger');
+  const navMobile = document.getElementById('nav-mobile');
+
+  burger.addEventListener('click', () => {
+    const isOpen = burger.classList.toggle('open');
+    navMobile.style.display = isOpen ? 'flex' : 'none';
+  });
+
+  navMobile.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navMobile.style.display = 'none';
+    });
+  });
+
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(item => {
+        item.classList.remove('active');
+        item.setAttribute('aria-selected', 'false');
+      });
+
+      document.querySelectorAll('.panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+    });
+  });
+
+  async function submitToFormspree(formEl, endpoint, onSuccess) {
+    const data = new FormData(formEl);
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) onSuccess();
+  }
+
+  document.getElementById('notify-form').addEventListener('submit', async event => {
+    event.preventDefault();
+    await submitToFormspree(
+      event.target,
+      'https://formspree.io/f/YOUR_NOTIFY_ID',
+      () => {
+        event.target.style.display = 'none';
+        document.getElementById('notify-thanks').style.display = 'block';
+      }
+    );
+  });
+
+document.getElementById('apply-form').addEventListener('submit', async event => {
+  event.preventDefault();
+  const form = event.target;
+  const success = document.getElementById('form-success');
+  await submitToFormspree(
+    form,
+    'https://formspree.io/f/YOUR_APPLY_ID',
+    () => {
+      form.style.display = 'none';
+      success.style.display = 'block';
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  );
+});
+  const chapters = [
+    { id: 'about', number: '01' },
+    { id: 'how-it-works', number: '02' },
+    { id: 'for-venues', number: '03' },
+    { id: 'for-guests', number: '04' },
+    { id: 'coffee-edition', number: '05' },
+    { id: 'sponsors', number: '06' },
+    { id: 'apply', number: '07' }
+  ];
+
+  const chapterCurrent = document.getElementById('chapter-current');
+
+  function updateChapterIndicator() {
+    const activeChapter = chapters
+      .map(chapter => {
+        const section = document.getElementById(chapter.id);
+
+        return {
+          number: chapter.number,
+          top: section.getBoundingClientRect().top
+        };
+      })
+      .filter(chapter => chapter.top < window.innerHeight * 0.45)
+      .pop();
+
+    if (activeChapter) {
+      chapterCurrent.textContent = activeChapter.number;
+    }
+  }
+
+  window.addEventListener('scroll', updateChapterIndicator);
+  window.addEventListener('load', updateChapterIndicator);
+</script>
+</body>
+</html>
